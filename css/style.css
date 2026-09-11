@@ -1,0 +1,852 @@
+/* ============================================================
+   LIFE DASHBOARD — STYLESHEET
+   Palette:
+     --bg:          #f4f0fb  (soft lavender page background)
+     --surface:     #ffffff  (card background)
+     --primary:     #a78bfa  (violet — main accent)
+     --primary-dark:#7c5cbf  (darker violet for hover states)
+     --secondary:   #f9a8d4  (pink — secondary accent)
+     --accent:      #93c5fd  (sky blue — tertiary accent)
+     --text:        #2d2b3d  (near-black, readable on light bg)
+     --text-muted:  #7b7896  (subdued labels / meta text)
+     --border:      #e5e0f7  (light purple-tinted border)
+     --danger:      #f87171  (soft red for delete)
+     --success:     #6ee7b7  (mint for done state)
+   ============================================================ */
+
+/* ---- CSS Custom Properties --------------------------------- */
+:root {
+  --bg:           #f4f0fb;
+  --surface:      #ffffff;
+  --primary:      #a78bfa;
+  --primary-dark: #7c5cbf;
+  --secondary:    #f9a8d4;
+  --accent:       #93c5fd;
+  --text:         #2d2b3d;
+  --text-muted:   #7b7896;
+  --border:       #e5e0f7;
+  --danger:       #f87171;
+  --danger-dark:  #dc2626;
+  --success:      #6ee7b7;
+
+  --radius-sm:  6px;
+  --radius-md:  14px;
+  --radius-lg:  20px;
+
+  --shadow-card: 0 4px 20px rgba(167, 139, 250, 0.12);
+  --shadow-btn:  0 2px 8px  rgba(167, 139, 250, 0.25);
+
+  --font-base:  'Segoe UI', system-ui, -apple-system, sans-serif;
+  --transition: 0.2s ease;
+}
+
+/* ---- Reset & Base ------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-base);
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+}
+
+/* ---- Utility: Card ----------------------------------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  box-shadow: var(--shadow-card);
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+#header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 12px rgba(167, 139, 250, 0.08);
+
+  /* Row layout: greeting centred, toggle pinned to the right */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;   /* anchor for the absolutely-positioned toggle */
+}
+
+#greeting-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-align: center;
+}
+
+/* Theme toggle button */
+#theme-toggle {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-base);
+  background: var(--bg);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition), color var(--transition),
+              border-color var(--transition), transform var(--transition);
+  box-shadow: var(--shadow-btn);
+}
+
+#theme-toggle:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  transform: translateY(calc(-50% - 1px));
+}
+
+#theme-toggle:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+#greeting-text {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: var(--primary-dark);
+  letter-spacing: -0.02em;
+}
+
+#current-datetime {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
+}
+
+#current-time {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+#current-date {
+  font-weight: 400;
+}
+
+/* Name personalisation row */
+#name-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.6rem;
+}
+
+#name-input {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  font-family: var(--font-base);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--text);
+  width: 180px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+#name-input::placeholder {
+  color: var(--text-muted);
+}
+
+#name-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.2);
+}
+
+#save-name {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-base);
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition), transform var(--transition);
+  box-shadow: var(--shadow-btn);
+}
+
+#save-name:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+#save-name:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   MAIN CONTENT — RESPONSIVE GRID
+   ============================================================ */
+#main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+
+  display: grid;
+  /* Two equal columns for timer + todo, then full-width for quick links */
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "timer  todo"
+    "links  links";
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* ============================================================
+   FOCUS TIMER
+   ============================================================ */
+#timer-section {
+  grid-area: timer;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+#timer-section h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+#timer-display {
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  font-weight: 800;
+  color: var(--primary-dark);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+#timer-separator {
+  opacity: 0.5;
+}
+
+#timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Shared button base for timer */
+#timer-controls button {
+  padding: 0.55rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition),
+              box-shadow var(--transition);
+  box-shadow: var(--shadow-btn);
+  letter-spacing: 0.02em;
+}
+
+#timer-controls button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+#btn-start {
+  background: var(--primary);
+  color: #fff;
+}
+#btn-start:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+#btn-stop {
+  background: var(--secondary);
+  color: var(--text);
+}
+#btn-stop:hover {
+  background: #f472b6;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+#btn-reset {
+  background: var(--border);
+  color: var(--text-muted);
+}
+#btn-reset:hover {
+  background: #d4cef0;
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   TO-DO LIST
+   ============================================================ */
+#todo-section {
+  grid-area: todo;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  box-shadow: var(--shadow-card);
+}
+
+#todo-section h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+/* Add-task form */
+#todo-form {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+#todo-input {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  font-family: var(--font-base);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+#todo-input::placeholder {
+  color: var(--text-muted);
+}
+
+#todo-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.2);
+}
+
+#btn-add-todo {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-base);
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition), transform var(--transition);
+  box-shadow: var(--shadow-btn);
+}
+
+#btn-add-todo:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+#btn-add-todo:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Sort control */
+#todo-sort-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+#todo-sort-wrapper label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+#todo-sort {
+  flex: 1;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.85rem;
+  font-family: var(--font-base);
+  color: var(--text);
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  appearance: auto;   /* keep native arrow for accessibility */
+}
+
+#todo-sort:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.2);
+}
+
+/* Task list container */
+#todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+/* Scrollbar styling (webkit) */
+#todo-list::-webkit-scrollbar {
+  width: 5px;
+}
+#todo-list::-webkit-scrollbar-track {
+  background: var(--bg);
+  border-radius: 99px;
+}
+#todo-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 99px;
+}
+
+/* Individual task item — JS will generate these */
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.85rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), opacity var(--transition);
+}
+
+.todo-item:hover {
+  background: #ede9fa;
+}
+
+.todo-checkbox {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 0.92rem;
+  color: var(--text);
+  word-break: break-word;
+}
+
+/* Done state — applied by JS via class */
+.todo-item.done .todo-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.btn-edit-todo,
+.btn-delete-todo {
+  padding: 0.3rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-base);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.btn-edit-todo {
+  background: var(--accent);
+  color: var(--text);
+}
+.btn-edit-todo:hover {
+  background: #60aff5;
+  transform: translateY(-1px);
+}
+
+.btn-delete-todo {
+  background: #fde8e8;
+  color: var(--danger-dark);
+}
+.btn-delete-todo:hover {
+  background: var(--danger);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   QUICK LINKS
+   ============================================================ */
+#quicklinks-section {
+  grid-area: links;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  box-shadow: var(--shadow-card);
+}
+
+#quicklinks-section h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+/* Add-link form */
+#quicklinks-form {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+#link-label-input,
+#link-url-input {
+  flex: 1;
+  min-width: 160px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  font-family: var(--font-base);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+#link-label-input::placeholder,
+#link-url-input::placeholder {
+  color: var(--text-muted);
+}
+
+#link-label-input:focus,
+#link-url-input:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(249, 168, 212, 0.25);
+}
+
+#btn-add-link {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-base);
+  background: var(--secondary);
+  color: var(--text);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition), transform var(--transition);
+  box-shadow: 0 2px 8px rgba(249, 168, 212, 0.35);
+}
+
+#btn-add-link:hover {
+  background: #f472b6;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+#btn-add-link:focus-visible {
+  outline: 3px solid var(--secondary);
+  outline-offset: 2px;
+}
+
+/* Quick links list */
+#quicklinks-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+/* Individual link item — JS will generate these */
+.quicklink-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 99px;        /* pill shape */
+  padding: 0.35rem 0.75rem 0.35rem 1rem;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.quicklink-item:hover {
+  background: #ede9fa;
+  border-color: var(--primary);
+}
+
+.quicklink-anchor {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--primary-dark);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.quicklink-anchor:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.btn-delete-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 0.1rem 0.2rem;
+  border-radius: 50%;
+  transition: color var(--transition), background var(--transition);
+}
+
+.btn-delete-link:hover {
+  color: var(--danger-dark);
+  background: #fde8e8;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+#footer {
+  text-align: center;
+  padding: 1.25rem 1.5rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+/* ============================================================
+   RESPONSIVE — TABLET  (max 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  #main-content {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "timer"
+      "todo"
+      "links";
+    padding: 1.25rem 1rem;
+  }
+
+  #timer-section,
+  #todo-section,
+  #quicklinks-section {
+    padding: 1.5rem 1.25rem;
+  }
+
+  #todo-form {
+    flex-direction: column;
+  }
+
+  #btn-add-todo {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — MOBILE  (max 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  #header {
+    padding: 1.25rem 1rem;
+  }
+
+  #greeting-text {
+    font-size: 1.5rem;
+  }
+
+  #timer-display {
+    font-size: 3rem;
+  }
+
+  #timer-controls {
+    gap: 0.5rem;
+  }
+
+  #timer-controls button {
+    flex: 1;
+    padding: 0.6rem 0.5rem;
+  }
+
+  #quicklinks-form {
+    flex-direction: column;
+  }
+
+  #link-label-input,
+  #link-url-input {
+    min-width: unset;
+    width: 100%;
+  }
+
+  #btn-add-link {
+    width: 100%;
+  }
+
+  .todo-item {
+    flex-wrap: wrap;
+  }
+
+  .todo-text {
+    width: calc(100% - 30px); /* leave room for checkbox */
+  }
+
+  #name-form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #name-input {
+    width: 100%;
+  }
+
+  #save-name {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   DARK MODE — body.dark-mode overrides all CSS custom properties.
+   Every component uses var(--*) so this single block is enough.
+   ============================================================ */
+body.dark-mode {
+  --bg:           #1a1825;
+  --surface:      #25223a;
+  --primary:      #c4b5fd;
+  --primary-dark: #a78bfa;
+  --secondary:    #f9a8d4;
+  --accent:       #93c5fd;
+  --text:         #ede9fa;
+  --text-muted:   #9d97b8;
+  --border:       #3a3554;
+  --danger:       #f87171;
+  --danger-dark:  #fca5a5;
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-btn:  0 2px 8px  rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Dark: element-specific tweaks that can't rely on variables alone ---- */
+
+/* Hover tints use a dark-friendly purple instead of the light #ede9fa */
+body.dark-mode .todo-item:hover {
+  background: #312d4e;
+}
+
+body.dark-mode .quicklink-item:hover {
+  background: #312d4e;
+}
+
+/* Delete button inside quick link pills */
+body.dark-mode .btn-delete-link:hover {
+  background: rgba(248, 113, 113, 0.15);
+  color: var(--danger-dark);
+}
+
+/* To-do delete button */
+body.dark-mode .btn-delete-todo {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--danger-dark);
+}
+body.dark-mode .btn-delete-todo:hover {
+  background: var(--danger);
+  color: #1a1825;
+}
+
+/* Reset timer button — uses --border as background, needs to stay readable */
+body.dark-mode #btn-reset:hover {
+  background: #4a4570;
+  color: var(--text);
+}
+
+/* Stop timer button hover */
+body.dark-mode #btn-stop:hover {
+  background: #ec4899;
+  color: #fff;
+}
+
+/* Theme toggle button in dark mode */
+body.dark-mode #theme-toggle {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+body.dark-mode #theme-toggle:hover {
+  background: var(--primary-dark);
+  color: #1a1825;
+  border-color: var(--primary-dark);
+}
+
+/* ---- Dark: mobile header toggle position adjustment ---- */
+@media (max-width: 480px) {
+  #theme-toggle {
+    position: static;
+    transform: none;
+    margin-top: 0.75rem;
+    align-self: center;
+  }
+
+  #header {
+    flex-direction: column;
+    padding: 1.25rem 1rem;
+  }
+
+  #theme-toggle:hover {
+    transform: translateY(-1px);
+  }
+}

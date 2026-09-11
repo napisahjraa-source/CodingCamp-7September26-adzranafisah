@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Life Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+
+    <!-- ===================== HEADER / GREETING ===================== -->
+    <header id="header">
+      <section id="greeting-section" aria-label="Greeting and current time">
+        <h1 id="greeting-text">Good Morning!</h1>
+        <p id="current-datetime">
+          <span id="current-time"></span>
+          &mdash;
+          <span id="current-date"></span>
+        </p>
+
+        <!-- Name personalisation — JS reads/writes this -->
+        <div id="name-form" aria-label="Personalise greeting with your name">
+          <input
+            type="text"
+            id="name-input"
+            name="name-input"
+            placeholder="Enter your name"
+            autocomplete="off"
+            aria-label="Your name"
+            maxlength="40"
+          />
+          <button id="save-name" type="button">Save</button>
+        </div>
+      </section>
+
+      <!-- Theme toggle — icon/label updated by JavaScript -->
+      <button
+        id="theme-toggle"
+        type="button"
+        aria-label="Switch to dark mode"
+      >🌙 Dark</button>
+    </header>
+
+    <!-- ===================== MAIN CONTENT ===================== -->
+    <main id="main-content">
+
+      <!-- ---- FOCUS TIMER SECTION ---- -->
+      <section id="timer-section" aria-labelledby="timer-heading">
+        <h2 id="timer-heading">Focus Timer</h2>
+
+        <div id="timer-display" aria-live="polite" aria-atomic="true">
+          <span id="timer-minutes">25</span>
+          <span id="timer-separator">:</span>
+          <span id="timer-seconds">00</span>
+        </div>
+
+        <div id="timer-controls">
+          <button id="btn-start" type="button">Start</button>
+          <button id="btn-stop" type="button">Stop</button>
+          <button id="btn-reset" type="button">Reset</button>
+        </div>
+      </section>
+
+      <!-- ---- TO-DO LIST SECTION ---- -->
+      <section id="todo-section" aria-labelledby="todo-heading">
+        <h2 id="todo-heading">To-Do List</h2>
+
+        <!-- Add new task form -->
+        <form id="todo-form" aria-label="Add a new task" onsubmit="return false">
+          <input
+            type="text"
+            id="todo-input"
+            name="todo-input"
+            placeholder="Add a new task..."
+            autocomplete="off"
+            aria-label="New task description"
+          />
+          <button id="btn-add-todo" type="submit">Add</button>
+        </form>
+
+        <!-- Sort control -->
+        <div id="todo-sort-wrapper">
+          <label for="todo-sort">Sort:</label>
+          <select id="todo-sort" aria-label="Sort tasks">
+            <option value="default">Default</option>
+            <option value="az">A → Z</option>
+            <option value="za">Z → A</option>
+            <option value="done">Completed first</option>
+          </select>
+        </div>
+
+        <!-- Task list -->
+        <ul id="todo-list" aria-label="Task list">
+          <!--
+            Each task item will be injected here by JavaScript.
+            Example structure per item:
+            <li class="todo-item" data-id="...">
+              <input type="checkbox" class="todo-checkbox" aria-label="Mark task as done" />
+              <span class="todo-text">Task description</span>
+              <button class="btn-edit-todo" type="button">Edit</button>
+              <button class="btn-delete-todo" type="button">Delete</button>
+            </li>
+          -->
+        </ul>
+      </section>
+
+      <!-- ---- QUICK LINKS SECTION ---- -->
+      <section id="quicklinks-section" aria-labelledby="quicklinks-heading">
+        <h2 id="quicklinks-heading">Quick Links</h2>
+
+        <!-- Add new link form -->
+        <form id="quicklinks-form" aria-label="Add a new quick link" onsubmit="return false">
+          <input
+            type="text"
+            id="link-label-input"
+            name="link-label-input"
+            placeholder="Link label (e.g. YouTube)"
+            autocomplete="off"
+            aria-label="Link label"
+          />
+          <input
+            type="url"
+            id="link-url-input"
+            name="link-url-input"
+            placeholder="URL (e.g. https://youtube.com)"
+            autocomplete="off"
+            aria-label="Link URL"
+          />
+          <button id="btn-add-link" type="submit">Add Link</button>
+        </form>
+
+        <!-- Quick links list -->
+        <ul id="quicklinks-list" aria-label="Quick links list">
+          <!--
+            Each link item will be injected here by JavaScript.
+            Example structure per item:
+            <li class="quicklink-item" data-id="...">
+              <a class="quicklink-anchor" href="..." target="_blank" rel="noopener noreferrer">Label</a>
+              <button class="btn-delete-link" type="button">Delete</button>
+            </li>
+          -->
+        </ul>
+      </section>
+
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer id="footer">
+      <p>&copy; 2026 Life Dashboard</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
